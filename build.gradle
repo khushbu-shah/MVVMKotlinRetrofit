@@ -1,74 +1,48 @@
-apply plugin: 'com.android.application'
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
 
-apply plugin: 'kotlin-android'
-
-apply plugin: 'kotlin-android-extensions'
-
-apply plugin: 'kotlin-kapt'
-
-android {
-    compileSdkVersion rootProject.compileSdkVersion
-    buildToolsVersion rootProject.buildToolsVersion
-    defaultConfig {
-        applicationId "com.example.chiragdarji.androidmvvmsample"
-        minSdkVersion rootProject.minSdkVersion
-        targetSdkVersion rootProject.targetSdkVersion
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-        resValue "string", "places_api_key", (project.findProperty("PLACES_API_KEY") ?: "")
+buildscript {
+    ext.kotlin_version = '1.3.11'
+    repositories {
+        google()
+        jcenter()
     }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
-    }
-    dataBinding {
-        enabled = true
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath 'com.android.tools.build:gradle:3.3.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
     }
 }
 
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+allprojects {
+    repositories {
+        google()
+        jcenter()
+    }
+}
 
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
 
-    //Material design along with Androidx packages
-    implementation "com.google.android.material:material:$rootProject.versions_materialdesign"
+ext {
+    // Sdk and tools
+    compileSdkVersion = 28
+    buildToolsVersion ="28.0.3"
 
-    //Constraint layout
-    implementation "androidx.constraintlayout:constraintlayout:$rootProject.versions_constraintLayout"
+    minSdkVersion = 21
+    targetSdkVersion = 28
 
-    //gson
-    implementation "com.google.code.gson:gson:$rootProject.versions_gson"
+    // App dependencies
 
-    //retrofit
-    implementation "com.squareup.retrofit2:retrofit:$rootProject.versions_retrofit"
-    implementation "com.squareup.retrofit2:converter-gson:$rootProject.versions_retrofit"
-    implementation "com.squareup.retrofit2:adapter-rxjava2:$rootProject.versions_retrofit"
-    implementation 'com.squareup.okhttp3:logging-interceptor:3.12.0'
+    versions_materialdesign = '1.0.0-beta01'
+    versions_constraintLayout = '2.0.0-alpha2'
+    versions_gson = '2.8.5'
+    versions_retrofit = '2.5.0'
+    versions_arch_core = "2.0.0"
+    versions_room = "2.1.0-alpha03"
+    versions_lifecycle = "2.0.0"
+    versions_nav = "1.0.0-alpha09"
 
-    //room
-    implementation "androidx.room:room-runtime:$rootProject.versions_room"
-    annotationProcessor "androidx.room:room-compiler:$rootProject.versions_room"
-    implementation "androidx.room:room-rxjava2:$rootProject.versions_room"
-
-    //lifecycle
-    implementation "androidx.lifecycle:lifecycle-runtime:$rootProject.versions_lifecycle"
-    implementation "androidx.lifecycle:lifecycle-extensions:$rootProject.versions_lifecycle"
-    //implementation "androidx.lifecycle:lifecycle-common-java8:$rootProject.versions_lifecycle"
-    //implementation "androidx.lifecycle:lifecycle-compiler:$rootProject.versions_lifecycle"
-
-    //arc_core
-    implementation "androidx.arch.core:core-testing:$rootProject.versions_arch_core"
-
-    implementation 'com.google.android.libraries.places:places:1.0.0'
-    implementation "android.arch.navigation:navigation-fragment-ktx:$rootProject.versions_nav" // use -ktx for Kotlin
-    implementation "android.arch.navigation:navigation-ui-ktx:$rootProject.versions_nav" // use -ktx for Kotlin
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
 
 }
